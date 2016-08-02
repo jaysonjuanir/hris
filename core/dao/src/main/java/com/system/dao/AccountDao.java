@@ -40,23 +40,30 @@ public class AccountDao
                 //query.setParameter("user", user);
                 //query.setParameter("pass", pass);
                 //Account acc = getAccount(user,pass);
-                
-                String result = (String)session.createCriteria(Account.class)
-                .add(Restrictions.eq("username","admin"))
-                .add(Restrictions.eq("password","123"))
-                .setProjection(Projections.property("employeeid"))
+                Object id = session.createCriteria(Account.class)
+                .add(Restrictions.eq("username",user))
+                .add(Restrictions.eq("password",pass))
+                .setProjection(Projections.property("employeeId"))
                 .uniqueResult();
-                int resultEmployee = (int)session.createCriteria(Employee.class)
-                .add(Restrictions.eq("position","General Manager"))
-                .setProjection(Projections.property("accountId"))
-                .uniqueResult();
-                System.out.println(resultEmployee);
+                int result = 0;
+                if(id!=null){
+                    result = (int) id;
+                }
+//                .add(Restrictions.eq("username",user))
+//                .add(Restrictions.eq("password",pass))
+//                .setProjection(Projections.property("employeeId"))
+//                .uniqueResult();
+//                int resultEmployee = (int)session.createCriteria(Employee.class)
+//                .add(Restrictions.eq("position","General Manager"))
+//                .setProjection(Projections.property("accountId"))
+//                .uniqueResult();
+                //System.out.println(resultEmployee);
                 List aw = session.createCriteria(Account.class).addOrder( Order.asc("id") )
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
                 aw.forEach(System.out::println);
                 System.out.println(result);
 		session.close();
-                int employeeId = Integer.parseInt(result);//acc.getEmployeeId();
+                int employeeId = result;//acc.getEmployeeId();
 		return employeeId; 
 	}
         public Account getAccount(String user, String pass){

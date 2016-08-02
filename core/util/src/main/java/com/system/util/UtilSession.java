@@ -17,6 +17,7 @@ public class UtilSession
 {
     private static AnnotationConfiguration cfg = new AnnotationConfiguration()
 			.addAnnotatedClass(com.system.model.Employee.class)
+                        .addAnnotatedClass(com.system.model.Account.class)
 			.addAnnotatedClass(com.system.model.Actions.class)
 			.addAnnotatedClass(com.system.model.Messages.class)
 			//.addAnnotatedClass(com.person.model.Roles.class)

@@ -45,10 +45,15 @@ public class HomePage extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            System.out.println("MainPage \"Service\" method(inherited) called");
-            System.out.println("MainPage \"DoGet\" method called");
-            //response.sendRedirect(request.getContextPath()+"/HomePage");
-            request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+            HttpSession session=request.getSession(false);  
+            if(session==null){  
+                System.out.println("MainPage \"Service\" method(inherited) called");
+                System.out.println("MainPage \"DoGet\" method called");
+                //response.sendRedirect(request.getContextPath()+"/HomePage");
+                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+            }else{
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
+            }
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -70,16 +75,20 @@ public class HomePage extends HttpServlet {
 //            List<Employee> employees = new Service().getEmployees();
              user = request.getParameter("user");
              pass = request.getParameter("pass");
-             Account a = new Service().getAccount(user,pass);
+            //Account a = new Service().getAccount(user,pass);
             int id = new Service().verifyAccount(user, pass);
             
             System.out.println(id);
 
             response.setContentType("text/html");
             response.setStatus(HttpServletResponse.SC_OK);
-            //request.setAttribute("employees", employees);
-            //request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-            //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
+            if(id==0){
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=invalid username or password"));
+            }else{
+                HttpSession session=request.getSession();  
+                session.setAttribute("id",id);  
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }

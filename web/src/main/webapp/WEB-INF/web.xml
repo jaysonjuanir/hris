@@ -10,16 +10,16 @@
   
   
   <servlet>
-  	<servlet-name>MainPage</servlet-name>
-  	<display-name>MainPage</display-name>
+  	<servlet-name>Employee</servlet-name>
+  	<display-name>Employee</display-name>
   	<servlet-class>com.system.web.EmployeeList</servlet-class>
   	<!--Un-comment  below line if you want to instantiate and initialize the servlet during the servlet-container(tomcat) startup-->
   	<!-- <load-on-startup>1</load-on-startup> -->
   </servlet>
   
   <servlet-mapping>
-  	<servlet-name>MainPage</servlet-name>
-  	<url-pattern>/MainPage/*</url-pattern>
+  	<servlet-name>Employee</servlet-name>
+  	<url-pattern>/Employee/*</url-pattern>
   </servlet-mapping>
   <servlet>
   	<servlet-name>HomePage</servlet-name>
