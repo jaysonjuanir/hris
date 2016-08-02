@@ -44,12 +44,13 @@ public class EmployeeList extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession();  
+        HttpSession session=request.getSession(false);  
         if(session!=null){
             System.out.println("MainPage \"Service\" method(inherited) called");
             System.out.println("MainPage \"DoGet\" method called");
 
             try {
+                
                 Name name = new Name("Jennifer", "T", "Marcos");
                 Address address = new Address("378 E. Marcos St.", "Coloong", "Valenzuela City");
                 Employee employee = new Employee(name, address, "09496324385", 1, "General Manager", null, null);
@@ -60,11 +61,13 @@ public class EmployeeList extends HttpServlet {
                 response.setContentType("text/html");
                 response.setStatus(HttpServletResponse.SC_OK);
                 request.setAttribute("employees", employees);
-                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/employee.jsp").forward(request, response);
                 //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        }else{
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not logged in"));
         }
         
 		//storeInSessionAndRespond(request, response);
