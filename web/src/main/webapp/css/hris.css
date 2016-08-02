@@ -104,6 +104,18 @@ hr {
 	border-bottom: 2px solid black;
 	padding-bottom: 5px;
 }
+.navbar-default .navbar-nav>li>form span {
+	font-size: 12px;
+	text-transform: uppercase;
+	color: black;
+	font-weight: bold;
+	border-bottom: 2px solid transparent;
+}
+
+.navbar-default .navbar-nav>li>form span:hover {
+	border-bottom: 2px solid black;
+	padding-bottom: 5px;
+}
 
 .navbar-header .pull-left>img {
 	max-width: 200px;

@@ -44,22 +44,33 @@ public class HomePage extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try{
-            HttpSession session=request.getSession(false);  
-            if(session==null){  
+        try {
+            HttpSession session = request.getSession(false);
+            String action = request.getParameter("action");
+            if (action == null) {
+                action = "";
+            }
+
+            if (session == null) {
                 System.out.println("MainPage \"Service\" method(inherited) called");
                 System.out.println("MainPage \"DoGet\" method called");
                 //response.sendRedirect(request.getContextPath()+"/HomePage");
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-            }else{
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
+            } else {
+                Integer employeeId = (Integer) session.getAttribute("id");
+                if(employeeId!=null){
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
+                }else{
+                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                }
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         System.out.println("Username: " + user + " Password: " + pass);
@@ -73,20 +84,20 @@ public class HomePage extends HttpServlet {
 //            //new Service().executeCreateEmployee(employee);
 //
 //            List<Employee> employees = new Service().getEmployees();
-             user = request.getParameter("user");
-             pass = request.getParameter("pass");
+            user = request.getParameter("user");
+            pass = request.getParameter("pass");
             //Account a = new Service().getAccount(user,pass);
             int id = new Service().verifyAccount(user, pass);
-            
+            System.out.println("checking id:");
             System.out.println(id);
 
             response.setContentType("text/html");
             response.setStatus(HttpServletResponse.SC_OK);
-            if(id==0){
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=invalid username or password"));
-            }else{
-                HttpSession session=request.getSession();  
-                session.setAttribute("id",id);  
+            if (id == 0) {
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=invalid-username-or-password"));
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("id", id);
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
             }
         } catch (Exception ex) {
