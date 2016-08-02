@@ -59,22 +59,31 @@ public class EmployeeList extends HttpServlet {
                 session.invalidate();  
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage"));
             }else{
-                try {
-                    Name name = new Name("Jennifer", "T", "Marcos");
-                    Address address = new Address("378 E. Marcos St.", "Coloong", "Valenzuela City");
-                    Employee employee = new Employee(name, address, "09496324385", 1, "General Manager", null, null);
-                    //new Service().executeCreateEmployee(employee);
+                Integer employeeLevel = (Integer) session.getAttribute("level");
+                if(employeeLevel==null){
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not-logged-in"));
+                }else if(employeeLevel==1){
+                    try {
+                        Name name = new Name("Jennifer", "T", "Marcos");
+                        Address address = new Address("378 E. Marcos St.", "Coloong", "Valenzuela City");
+                        Employee employee = new Employee(name, address, "09496324385", 1, "General Manager", null, null);
+                        //new Service().executeCreateEmployee(employee);
 
-                    List<Employee> employees = new Service().getEmployees();
+                        List<Employee> employees = new Service().getEmployees();
 
-                    response.setContentType("text/html");
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    request.setAttribute("employees", employees);
+                        response.setContentType("text/html");
+                        response.setStatus(HttpServletResponse.SC_OK);
+                        request.setAttribute("employees", employees);
+                        
+                        //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                     request.getRequestDispatcher("/WEB-INF/employee.jsp").forward(request, response);
-                    //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                }else{
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Manager"));
                 }
+                
             }
         }else{
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not logged in"));

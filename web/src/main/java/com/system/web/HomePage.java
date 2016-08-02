@@ -57,11 +57,14 @@ public class HomePage extends HttpServlet {
                 //response.sendRedirect(request.getContextPath()+"/HomePage");
                 request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
             } else {
-                Integer employeeId = (Integer) session.getAttribute("id");
-                if(employeeId!=null){
+                Integer employeeLevel = (Integer) session.getAttribute("level");
+                if(employeeLevel==null){
+                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                    
+                }else if(employeeLevel==1){
                     response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
                 }else{
-                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Manager"));
                 }
             }
         } catch (Exception ex) {
@@ -88,16 +91,20 @@ public class HomePage extends HttpServlet {
             pass = request.getParameter("pass");
             //Account a = new Service().getAccount(user,pass);
             int id = new Service().verifyAccount(user, pass);
+            Account ac = new Service().getAccount(user, pass);
+            System.out.println("checking account:");
+            System.out.println(ac);
             System.out.println("checking id:");
             System.out.println(id);
 
             response.setContentType("text/html");
             response.setStatus(HttpServletResponse.SC_OK);
-            if (id == 0) {
+            if (ac == null) {
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=invalid-username-or-password"));
             } else {
                 HttpSession session = request.getSession();
-                session.setAttribute("id", id);
+                session.setAttribute("id", ac.getEmployeeId());
+                session.setAttribute("level", ac.getLevel());
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
             }
         } catch (Exception ex) {
