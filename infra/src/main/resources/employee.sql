@@ -28,22 +28,7 @@ CREATE TABLE actions (
     id bigserial NOT NULL,
     viewPoints varchar(250),
 	type varchar(250) NOT NULL,
+        times bigint NOT NULL,
 	employeeId bigint NOT NULL,
 	CONSTRAINT actions_pkey PRIMARY KEY (id)
 );
-
-DROP TABLE if EXISTS personrole CASCADE;
-CREATE TABLE personrole (
-    person_id bigint NOT NULL,
-    role_id bigint NOT NULL,
-	CONSTRAINT person_fkey FOREIGN KEY (person_id)
-	REFERENCES person(id) MATCH SIMPLE ON DELETE CASCADE,
-	CONSTRAINT role_fkey FOREIGN KEY (role_id)
-	REFERENCES roles(id) MATCH SIMPLE ON DELETE CASCADE
-	
-);
-
-INSERT INTO roles VALUES(1,'dev');
-INSERT INTO roles VALUES(2,'qa');
-INSERT INTO roles VALUES(3,'ba');
-

@@ -21,7 +21,18 @@
   	<servlet-name>MainPage</servlet-name>
   	<url-pattern>/MainPage/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>HomePage</servlet-name>
+  	<display-name>HomePage</display-name>
+  	<servlet-class>com.system.web.HomePage</servlet-class>
+  	<!--Un-comment  below line if you want to instantiate and initialize the servlet during the servlet-container(tomcat) startup-->
+  	<!-- <load-on-startup>1</load-on-startup> -->
+  </servlet>
   
+  <servlet-mapping>
+  	<servlet-name>HomePage</servlet-name>
+  	<url-pattern>/HomePage/*</url-pattern>
+  </servlet-mapping>
   
   <!--
   <servlet>

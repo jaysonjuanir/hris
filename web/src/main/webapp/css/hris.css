@@ -1,0 +1,302 @@
+@charset "utf-8"
+
+html,body {
+	width: auto;
+	overflow-x: hidden !important;
+}
+
+body {	
+	font-family: 'Raleway', sans-serif;
+	letter-spacing: 1px;
+}
+
+p {
+	padding: 10px 50px;
+	margin-top: 20px;
+	color: #4b4b4b;
+	font-size: 14px;
+	line-height: 25px;
+}
+
+p.larger {
+	font-size: 18px;
+}
+
+div {
+	text-align: center;
+}
+
+h1,h2,h3,h4,h5 {
+	color: #4b4b4b;
+	line-height: 35px;
+
+}
+
+h1.big {
+	font-size: 40px;
+	color: black;
+	line-height: 40px;
+}
+
+hr {
+	border-top: 1px solid #ccc;
+}
+
+.btn:hover {
+	transition: all ease 0.5s;
+	-webkit-transition: all ease 0.7s;
+	-moz-transition: all ease 0.7s;
+	-o-transition: all ease 0.7s;
+	-ms-transition: all ease 0.7s ;
+}
+
+.btn-outline {
+	color: #000;
+	margin-top: 20px;
+	margin-bottom: 50px;
+	background-color: transparent;
+	border: 2px solid #2ea530;
+}
+
+.btn-outline:hover {
+	color: #4b4b4b;
+	border: 2px solid #8cd68d;
+}
+
+.hris-section {
+	padding: 60px 30px;
+}
+
+ /*** NAVBAR ***/
+.navbar {
+	font-size: 1.1em;
+	height: 80px;
+	background-color: rgba(0, 0, 0, 0);
+	transition: background-color 0.5s ease 0s;
+}
+
+.navbar.opaque {
+	background-color: rgba(255, 255, 255, 0.75);
+	transition: background-color 0.5s ease 0s;
+}
+
+.navbar-nav {
+	margin-top: 15px;
+}
+
+.navbar-default {
+	border: none;
+}
+
+.navbar .navbar-collapse {
+	text-align: left;
+}
+
+.navbar-default .navbar-nav>li>a span {
+	font-size: 12px;
+	text-transform: uppercase;
+	color: black;
+	font-weight: bold;
+	border-bottom: 2px solid transparent;
+}
+
+.navbar-default .navbar-nav>li>a span:hover {
+	border-bottom: 2px solid black;
+	padding-bottom: 5px;
+}
+
+.navbar-header .pull-left>img {
+	max-width: 200px;
+	padding-top: 20px;
+}
+
+.navbar-default .navbar-nav>li>a span.icon:hover {
+	border: none;
+	padding-bottom: 5px;
+}
+
+#bs-example-navbar-collapse-1 {
+ 	margin-top: 10px;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+	background-color: transparent;
+}
+
+/*div#bs-example-navbar-collapse-1 {
+	background-color: rgba(0, 0, 0, 0.75);
+}*/
+
+/*** HEADER ***/
+#home-top {
+	background-image: url('../images/bg1.jpg');
+}
+
+.header {
+	background-size: cover;
+	position: relative;
+	display: block;
+	height: 600px;
+    width: 100%;
+	padding-bottom: 100px;
+	padding-top: 200px;
+    z-index: 100;
+    text-align: center;
+}
+
+.header h3 {
+	font-size: 20px;
+	color: black;
+}
+
+.header h1, h3 {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+
+/*** CONTACT SECTION ***/
+.contact-section {
+	background-image: url('../images/contact-us.jpg');
+	background-position: right -50px;
+	color: #ffffff;
+}
+
+section #contact {
+	padding-bottom: 30px;
+}
+
+div.form-group {
+	text-align: left;
+	color: white;
+}
+
+.text-white {
+	color: white;
+}
+
+.contact-list {
+	margin: 5px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	list-style: none;
+}
+
+.contact-list strong {
+	font-size: 12px;
+}
+
+.contact-section h3 {
+	/*margin-bottom: 0;*/
+	margin-top: 0;
+}
+
+.contact-section p {
+	margin-top: 5px;
+}
+
+.contact-section a {
+	color: #fff;
+}
+
+.contact-section a:hover {
+	text-decoration: none;
+}
+
+.contact-section small {
+	font-size: x-small;
+}
+
+.contact-list li {
+	font-size: 12px;
+}
+
+#contact-form {
+	padding-left: 30px;
+}
+
+#contact-form .btn-send {
+	padding: 10px 30px;
+	margin-top: 5px;
+}
+
+span.glyphicon {
+	padding-right: 10px;
+	font-size: 1.2em;
+}
+
+/*==========  Media Queries  ==========*/
+ /* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+	.carousel-inner
+	{
+		padding: 30px 60px;
+	}
+
+	.navbar-header {
+      float: none;
+	}
+
+	.navbar-toggle {
+	  display: block;
+	}
+
+	.navbar-collapse.collapse {
+	  display: none!important;
+	}
+
+	.navbar-nav {
+	  float: none!important;
+	}
+
+	.navbar-nav>li {
+	  float: none;
+	}
+	
+	.collapse.in{
+	  display:block !important;
+	}
+
+ 	#bs-example-navbar-collapse-1 {
+ 		padding: 15px;
+ 		background-color: rgba(0,0,0,0.75);
+ 		height: 900px;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+	.carousel-inner
+	{
+		padding: 30px;
+	}
+
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+	.carousel-inner
+	{
+		padding: 20px 20px 40px 20px;
+	}
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+	.carousel-inner
+	{
+		padding: 20px;
+	}    
+}
