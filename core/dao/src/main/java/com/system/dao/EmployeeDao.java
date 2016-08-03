@@ -33,6 +33,17 @@ public class EmployeeDao
             System.out.println("EMPLOYEE CREATED!!");
             session.close();
     }
+    public int addEmployeeWithAccount(Employee employee){
+            //UtilSession utilSession = new UtilSession();
+            session = UtilSession.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            int empId = (Integer)session.save(employee);
+            session.getTransaction().commit();
+            System.out.println("EMPLOYEE CREATED!!");
+            session.close();
+            return empId;
+    }
     public List<Employee> getEmployees(){
             session = UtilSession.getSessionFactory().openSession();
             List<Employee> employee = null;

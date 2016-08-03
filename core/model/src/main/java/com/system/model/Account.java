@@ -24,7 +24,7 @@ public class Account extends BaseEntity{
     @Column(name="employeeid")
     private int employeeId;
 
-    public Account(){}
+        public Account(){}
 
     public Account(String username, String password, int level, int employeeId) {
         this.username = username;

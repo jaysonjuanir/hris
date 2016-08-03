@@ -31,7 +31,7 @@ public class BulletinDao {
         session = UtilSession.getSessionFactory().openSession();
         session.beginTransaction();
 
-        session.save(bulletin);
+        session.saveOrUpdate(bulletin);
         session.getTransaction().commit();
         System.out.println("BULLETIN CREATED!!");
         session.close();

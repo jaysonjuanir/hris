@@ -22,6 +22,9 @@ public class Service {
     public void executeCreateEmployee(Employee employee) {
         employeeDao.addEmployee(employee);
     }
+    public int executeCreateEmployeeWithAccount(Employee employee) {
+        return employeeDao.addEmployeeWithAccount(employee);
+    }
 
     public void executeUpdatedEmployee(Employee employee) {
         employeeDao.updateEmployee(employee);
@@ -64,5 +67,11 @@ public class Service {
     }
     public Account getAccount(String user, String pass) {
         return accountDao.getAccount(user, pass);
+    }
+    public Long checkUsername(String username){
+        return accountDao.checkUsername(username);
+    }
+    public void addAccount(Account account) {
+        accountDao.addAccount(account);
     }
 }

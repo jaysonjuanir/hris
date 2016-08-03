@@ -65,7 +65,7 @@
 							</a>
 						</li>
 						<li>
-							<a data-toggle="modal" data-target="#loginModal">
+							<a href="#" data-toggle="modal" data-target="#loginModal">
 								<span>Login</span>
 							</a>
 						</li>
@@ -80,7 +80,7 @@
 				<div class="row">
 					<h1 class="text-center big"><i>Perfect Harmony</i></h1> 
 					<h3 class="text-center">"SING YOUR FEELINGS"</h3>
-					<h3 class="text-center">KAMIAS ST. QUEZON CITY</h3>
+					<h3 class="text-center">KAMIAS ST. VALENZUELA CITY</h3>
 				</div>
 			</div>
 		</section>
@@ -266,9 +266,6 @@
 							<div class="form-group">
 							  <label for="pwd" style="color : black;">Password:</label>
 							  <input type="password" class="form-control" id="pwd" name = "pass"/>
-							</div>
-							<div class="checkbox">
-							  <label><input type="checkbox"> Remember me</label>
 							</div>
 							<input type="submit" class="btn btn-success" value="Submit"/>
 						</form>

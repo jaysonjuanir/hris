@@ -80,17 +80,66 @@
 
 		<!-- HEADER -->
 		<section class="header hris-section" style="background-image : url('images/manager-bg.jpg')">
-			<div class="container">
+			<div class="container" style="position: relative;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);">
 				<div class="row">
 					<h2 class="text-left" style="margin-top:0px; color:black;">Welcome ${employeeName}</h2> 
 				</div>
 			</div>
 		</section>
+		
+		<div class="container">
+				<div class="row">
+		      <div class="col-md-12">
+			      <h2><b>EMPLOYEE LIST</b></h2>
+				  <br/>
+				  <a class="righButton" href="${pageContext.request.contextPath}/Manager?action=editEmployee" role="button">
+					  Edit Employee
+				  </a>
+			      <hr>
+			      <div class="table-responsive">
+	            <table id="mytable" class="table table-condensed table-bordered">
+			          <theads>
+			          	<tr>
+	                 	<th class="col-md-3 text-center">First Name</th>
+	                 	<th class="col-md-3 text-center">Middle Name</th>
+						  <th class="col-md-3 text-center">Last Name</th>
+						  <th class="col-md-3 text-center">Address</th>
+						  <th class="col-md-3 text-center">Contact</th>
+						  <th class="col-md-3 text-center">Position</th>
+			          	</tr>
+                </thead>
+		  					<tbody>
+							<c:forEach var="emp" items="${employees}">
+				  				<tr>
+								
+									
+									  <td class="col-md-3 text-center">${emp.getName().getFirstName()}</td>
+									  <td class="col-md-3 text-center">${emp.getName().getMiddleName()}</td>
+									  <td class="col-md-3 text-center">${emp.getName().getLastName()}</td>
+									  <td class="col-md-3 text-center">${emp.getAddress()}</td>
+									  <td class="col-md-3 text-center">${emp.getContact()}</td>
+									  <td class="col-md-3 text-center">${emp.getPosition()}</td>
+				  				</tr>
+								</c:forEach>
+			  				</tbody>      
+							</table>
+							<div class="clearfix"></div>
+	          </div> <!--end of div table-->
+		      </div> <!--end of column-->
+				</div> <!--end of row-->
+			</div> <!--end of container-->
+		
+		
 		<!-- BULLETIN -->
 		<section id="bulletin" class="hris-section">
 			<div class="container" id="offset-top">
 				<div class="row">
-					<h1>Bulletin</h1>
+				<div class="col-md-12">
+					<h2><b>Bulletin</b></h2>
+					<br/>
+					<a class="righButton" href="${pageContext.request.contextPath}/Manager?action=editBulletin" role="button" data-slide="prev" >
+					  Edit Bulletin
+					</a>
 					<hr>
 					<!--ANNOUNCEMENTS CAROUSEL-->
 					<div id="announcementCarousel" class="carousel slide" data-ride="carousel">
@@ -181,7 +230,7 @@
 						
 					</div>
 				</div>
-					
+					</div> 
 					
 			</div>
 		</section>

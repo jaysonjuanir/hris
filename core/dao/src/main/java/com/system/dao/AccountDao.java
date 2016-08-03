@@ -83,4 +83,20 @@ public class AccountDao
 		}
 		return account;
 	}
+        public void addAccount(Account account){
+            //UtilSession utilSession = new UtilSession();
+            session = UtilSession.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            session.save(account);
+            session.getTransaction().commit();
+            System.out.println("Account CREATED!!");
+            session.close();
+        }
+        public Long checkUsername(String username){
+            session = UtilSession.getSessionFactory().openSession();
+            Long a = (Long) session.createCriteria(Account.class).add( Restrictions.eq("username", username)).setProjection(Projections.rowCount()).uniqueResult();
+            session.close();
+            return a;
+        }
 }

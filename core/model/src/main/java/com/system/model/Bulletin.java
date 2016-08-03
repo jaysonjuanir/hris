@@ -23,6 +23,7 @@ public class Bulletin extends BaseEntity{
     private String bulletinType;
     @Column(name = "employeename")
     private String employeeName;
+    
     public Bulletin(){}
 
     public Bulletin(String message, String bulletinSubject, String bulletinType, String employeeName) {

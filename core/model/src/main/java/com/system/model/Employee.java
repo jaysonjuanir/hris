@@ -21,9 +21,9 @@ public class Employee extends BaseEntity
 	private int accountId;
 	@Column(name = "position")
 	private String position;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
 	private Set<Messages> messages;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
 	private Set<Actions> actions;
 	
     public Employee(){}

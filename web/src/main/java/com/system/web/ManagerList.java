@@ -44,25 +44,46 @@ public class ManagerList extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession(false);
-        
+        HttpSession session = request.getSession(false);
+
         String action = request.getParameter("action");
-        if(action==null)
-            action="";
-            
-        
-        if(session!=null){
+        if (action == null) {
+            action = "";
+        }
+
+        if (session != null) {
             System.out.println("MainPage \"Service\" method(inherited) called");
             System.out.println("MainPage \"DoGet\" method called");
-            
-            if(action.equals("logout")){
-                session.invalidate();  
+
+            if (action.equals("logout")) {
+                session.invalidate();
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage"));
-            }else{
+            } else if (action.equals("editEmployee")) {
+                List<Employee> employees = new Service().getEmployees();
+                int employeeId = (int) session.getAttribute("id");
+
+                Employee thisEmployee = new Service().getEmployeeById(employeeId);
+                response.setContentType("text/html");
+                response.setStatus(HttpServletResponse.SC_OK);
+                request.setAttribute("errors", request.getParameter("errors"));
+                request.setAttribute("employee", thisEmployee);
+                request.setAttribute("employees", employees);
+                request.getRequestDispatcher("/WEB-INF/managerEditEmployee.jsp").forward(request, response);
+            }else if(action.equals("editBulletin")){
+                List<Bulletin> bulletin = new Service().getBulletin();
+                int employeeId = (int) session.getAttribute("id");
+
+                Employee thisEmployee = new Service().getEmployeeById(employeeId);
+                request.setAttribute("emp", thisEmployee);
+                response.setContentType("text/html");
+                response.setStatus(HttpServletResponse.SC_OK);
+                request.setAttribute("bulletin", bulletin);
+                request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+            }else {
                 Integer employeeLevel = (Integer) session.getAttribute("level");
-                if(employeeLevel==null){
+                if (employeeLevel == null) {
                     response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not-logged-in"));
-                }else if(employeeLevel==2){
+                } else if (employeeLevel == 2) {
                     try {
                         Name name = new Name("Jennifer", "T", "Marcos");
                         Address address = new Address("378 E. Marcos St.", "Coloong", "Valenzuela City");
@@ -70,12 +91,13 @@ public class ManagerList extends HttpServlet {
                         //new Service().executeCreateEmployee(employee);
 
                         List<Employee> employees = new Service().getEmployees();
-                        int employeeId = (int)session.getAttribute("id");
-                        
+                        int employeeId = (int) session.getAttribute("id");
+
                         Employee thisEmployee = new Service().getEmployeeById(employeeId);
                         response.setContentType("text/html");
                         response.setStatus(HttpServletResponse.SC_OK);
                         request.setAttribute("employee", thisEmployee);
+                        request.setAttribute("employees", employees);
                         List bulletin = new Service().getBulletin();
                         request.setAttribute("bulletin", bulletin);
                         //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
@@ -83,130 +105,235 @@ public class ManagerList extends HttpServlet {
                         ex.printStackTrace();
                     }
                     request.getRequestDispatcher("/WEB-INF/manager.jsp").forward(request, response);
-                }else{
+                } else {
                     response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
                 }
-                
             }
-        }else{
+            
+        } else {
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not logged in"));
         }
         //storeInSessionAndRespond(request, response);
 
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     * response)
-     */
-    /*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-     try{
-				
-     System.out.println("POST METHOD!");
-     String personId = request.getParameter("personId");
-     String firstName = request.getParameter("firstName");
-     String middleName = request.getParameter("middleName");
-     String lastName = request.getParameter("lastName");
-     String suffix = request.getParameter("suffix");
-     String title = request.getParameter("title");
-     String gender = request.getParameter("gender");
-     String birthday = request.getParameter("birthday");
-     String employed = request.getParameter("employed");
-     String dateHired = request.getParameter("dateHired");
-     String gwa = request.getParameter("gwa");
-     String [] roles = request.getParameterValues("role");
-			
-     String streetNumber = request.getParameter("streetNumber");
-     String barangay = request.getParameter("barangay");
-     String city = request.getParameter("city");
-     String zipcode = request.getParameter("zipcode");
-			
-     String [] contactType = request.getParameterValues("contacts");
-     String emailValue = request.getParameter("email");
-     String mobileValue = request.getParameter("mobile");
-     String landlineValue = request.getParameter("landline");
-     String emailId = request.getParameter("emailId");
-     String mobileId = request.getParameter("mobileId");
-     String landlineId = request.getParameter("landlineId");
-			
-     // for(String s:contactType){
-     // System.out.println(s);
-     // }
-     System.out.println(emailId.isEmpty()?"empty":"not empty");
-     System.out.println(mobileId);
-     System.out.println(landlineId);
-     personId=personId.isEmpty()?"0":personId;
-     emailId=emailId.isEmpty()?"0":emailId;
-     mobileId=mobileId.isEmpty()?"0":mobileId;
-     landlineId=landlineId.isEmpty()?"0":landlineId;
-     // NameDto names = new NameDto(firstName, middleName, lastName, suffix, title);
-     // AddressDto address = new AddressDto(streetNumber, barangay, city, zipcode);
-     // System.out.println(names);
-     // System.out.println(address);
-			
-     PersonDto person = new Service().createPerson(personId, firstName, middleName, lastName, suffix, title, gender, birthday, employed, dateHired, gwa,roles, streetNumber, barangay, city, zipcode, contactType, emailValue, mobileValue, landlineValue, emailId, mobileId, landlineId);
-			
-     boolean indicatorFields = new Service().checkRequired(firstName, middleName, lastName, streetNumber, barangay,city,zipcode);
-     boolean indicatorDate = new Service().checkDate(birthday);
-     boolean indicatorDecimal = new Service().checkDecimal(gwa);
-     boolean indicatorEmployed =true;
-     if(employed.equals("yes")){
-     indicatorEmployed = new Service().checkEmployed(dateHired, roles);
-     }
-     System.out.println(gender);
-     if(gender.equals("male")){
-     person.setGender(Gender.MALE);
-     }
-     else{
-     person.setGender(Gender.FEMALE);
-     }
-			
-     System.out.println("fields "+indicatorFields +" date "+ indicatorDate +" decimal "+ !indicatorDecimal +" employed "+ indicatorEmployed);
-     System.out.println("PERSON OUTPUT!!!!:" + person);
-     //person.getPerson_contact().forEach(System.out::println);
-     if(indicatorFields && indicatorDate && !indicatorDecimal && indicatorEmployed){
-     if(personId.isEmpty() || personId.equals("0")){
-     new Service().executeCreatePerson(person);
-     //System.out.println(person.getPerson_contact());
-     }
-     else{	
-     //PersonDto existingPerson = new Service().getPersonById(Integer.parseInt(personId));
-     System.out.println(person.getPerson_contact());
-     //person.setPerson_contact(existingPerson.getPerson_contact());
-					
-     System.out.println(person.getPerson_contact());
-     new Service().executeUpdatedPerson(person);
-     }
-				
-     response.sendRedirect(request.getContextPath()+"/MainPage?message=SUCCESS");
-     }else{
-     //error
-				
-     List<String> errors = new ArrayList<>();
-     if(!indicatorFields){
-     errors.add("Missing required fields");
-     }
-     if(!indicatorDate){
-     errors.add("Invalid date format");
-     }
-     if(indicatorDecimal){
-     errors.add("Invalid gwa");
-     }
-     if(!indicatorEmployed){
-     errors.add("Missing fields on employed/invalid format");
-     }
-     request.setAttribute("errors",errors);
-     request.setAttribute("person",person);
-     request.getRequestDispatcher("/WEB-INF/person.jsp").forward(request, response);
-				
-     //System.out.println("PERSON OUTPUT!!!!:" + person);
-     //System.out.println("NULL PERSON OUTPUT" + new PersonDto());
-     }
-     System.out.println(personId);
-     }
-     catch(Exception ex){
-     ex.printStackTrace();
-     }
-     }*/
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String firstName = request.getParameter("firstName");
+            String middleName = request.getParameter("middleName");
+            String lastName = request.getParameter("lastName");
+            String streetName = request.getParameter("streetName");
+            String barangay = request.getParameter("barangay");
+            String city = request.getParameter("city");
+            String contact = request.getParameter("contact");
+            String position = request.getParameter("position");
+            
+            String bulletinType = request.getParameter("bulletinType");
+            String bulletinSubject = request.getParameter("bulletinSubject");
+            String bulletinMessage = request.getParameter("bulletinMessage");
+            String employeeName = request.getParameter("employeeName");
+            
+            String action = request.getParameter("action");
+            if (action.equals("update")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                Employee employee = new Service().getEmployeeById(id);
+
+                Name name = new Name(firstName, middleName, lastName);
+                Address address = new Address(streetName, barangay, city);
+
+                employee.setName(name);
+                employee.setAddress(address);
+                employee.setContact(contact);
+                employee.setPosition(position);
+
+                new Service().executeUpdatedEmployee(employee);
+                
+                List<Employee> employees = new Service().getEmployees();
+                
+
+                response.setContentType("text/html");
+                response.setStatus(HttpServletResponse.SC_OK);
+                //request.setAttribute("errors", request.getParameter("errors"));
+                request.setAttribute("employees", employees);
+                String message = "Successful in Updating an Employee";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("/WEB-INF/managerEditEmployee.jsp").forward(request, response);
+            } else if (action.equals("add")) {
+                String username=request.getParameter("username");
+                System.out.println(username);
+                boolean checkUsername = new Service().checkUsername(username) == 0;
+                
+                String password=request.getParameter("password");
+                String password2=request.getParameter("password2");
+                boolean checkPassword = password.equals(password2);
+                
+                boolean indicator = true;
+                if(firstName.isEmpty() || middleName.isEmpty() || lastName.isEmpty() || streetName.isEmpty() || barangay.isEmpty() || city.isEmpty() || contact.isEmpty() || position.isEmpty()){
+                    indicator = false;
+                }
+                
+                System.out.println(checkUsername + " and " + checkPassword + " and " + indicator);
+                if(checkUsername && checkPassword && indicator){
+                    Name name = new Name(firstName, middleName, lastName);
+                    Address address = new Address(streetName, barangay, city);
+                    Employee employee = new Employee();
+                    employee.setName(name);
+                    employee.setAddress(address);
+                    employee.setContact(contact);
+                    employee.setPosition(position);
+
+                    int empId = new Service().executeCreateEmployeeWithAccount(employee);
+                    
+                    Account account = new Account(username, password, 1, empId);
+                    
+                    new Service().addAccount(account);
+                    
+                    List<Employee> employees = new Service().getEmployees();
+
+
+                    response.setContentType("text/html");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    //request.setAttribute("errors", request.getParameter("errors"));
+                    request.setAttribute("employees", employees);
+                    String message = "Successful in Creating an Employee";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("/WEB-INF/managerEditEmployee.jsp").forward(request, response);
+                }
+                else{
+                    List error = new ArrayList();
+                    if(!checkUsername){
+                        error.add("Username already taken");
+                    }
+                    if(!checkPassword){
+                        error.add("Password dont match");
+                    }
+                    if(!indicator){
+                        error.add("Missing required fields");
+                    }
+                    
+                    List<Employee> employees = new Service().getEmployees();
+
+
+                    response.setContentType("text/html");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    //request.setAttribute("errors", request.getParameter("errors"));
+                    request.setAttribute("employees", employees);
+                    request.setAttribute("errors", error);
+                    request.getRequestDispatcher("/WEB-INF/managerEditEmployee.jsp").forward(request, response);
+                }
+            } else if(action.equals("delete")){
+                int id = Integer.parseInt(request.getParameter("id"));
+                Employee employee = new Service().getEmployeeById(id);
+                new Service().deleteEmployee(employee);
+                List<Employee> employees = new Service().getEmployees();
+
+
+                response.setContentType("text/html");
+                response.setStatus(HttpServletResponse.SC_OK);
+                //request.setAttribute("errors", request.getParameter("errors"));
+                request.setAttribute("employees", employees);
+                request.setAttribute("message", "Success in deleting an employee");
+                request.getRequestDispatcher("/WEB-INF/managerEditEmployee.jsp").forward(request, response);
+            } else if(action.equals("addBulletin")){
+                boolean indicator = true;
+                if(bulletinMessage.isEmpty() || bulletinSubject.isEmpty() || bulletinType.isEmpty() || employeeName.isEmpty()){
+                    indicator = false;
+                }
+                
+                if(indicator){
+                    Bulletin bulletin = new Bulletin();
+                    //bulletinMessage, bulletinSubject, bulletinType, employeeName
+                    bulletin.setBulletinSubject(bulletinSubject);
+                    bulletin.setBulletinType(bulletinType);
+                    bulletin.setMessage(bulletinMessage);
+                    bulletin.setEmployeeName(employeeName);
+                    bulletin.setId(0);
+                    
+                    new Service().executeCreateBulletin(bulletin);
+                    List<Bulletin> bulletin1 = new Service().getBulletin();
+
+
+                    response.setContentType("text/html");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    request.setAttribute("message", "Bulletin Added Successfully");
+                    request.setAttribute("bulletin", bulletin1);
+                    request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+                }
+                else{
+                    List error = new ArrayList();
+                    if(!indicator){
+                        error.add("Missing required fields");
+                    }
+                    
+                    List<Bulletin> bulletin = new Service().getBulletin();
+
+
+                    response.setContentType("text/html");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    //request.setAttribute("errors", request.getParameter("errors"));
+                    request.setAttribute("bulletin", bulletin);
+                    request.setAttribute("errors", error);
+                    request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+                }
+            } else if(action.equals("deleteBulletin")){
+                int id = Integer.parseInt(request.getParameter("id"));
+                Bulletin bulletin = new Service().getBulletinById(id);
+                new Service().deleteEmployee(bulletin);
+                
+                List<Bulletin> bulletin1 = new Service().getBulletin();
+
+
+                response.setContentType("text/html");
+                response.setStatus(HttpServletResponse.SC_OK);
+                //request.setAttribute("errors", request.getParameter("errors"));
+                request.setAttribute("bulletin", bulletin1);
+                request.setAttribute("message", "Bulletin deleted successfully");
+                request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+            } else if(action.equals("updateBulletin")){
+                boolean indicator = true;
+                if(bulletinMessage.isEmpty() || bulletinSubject.isEmpty() || bulletinType.isEmpty() || employeeName.isEmpty()){
+                    indicator = false;
+                }
+                
+                if(indicator){
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    Bulletin bulletin = new Service().getBulletinById(id);
+                    //bulletinMessage, bulletinSubject, bulletinType, employeeName
+                    bulletin.setBulletinSubject(bulletinSubject);
+                    bulletin.setBulletinType(bulletinType);
+                    bulletin.setMessage(bulletinMessage);
+                    bulletin.setEmployeeName(employeeName);
+                    //bulletin.setId(0);
+                    
+                    new Service().executeCreateBulletin(bulletin);
+                    List<Bulletin> bulletin1 = new Service().getBulletin();
+
+
+                    response.setContentType("text/html");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    request.setAttribute("message", "Bulletin Updated Successfully");
+                    request.setAttribute("bulletin", bulletin1);
+                    request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+                }
+                else{
+                    List error = new ArrayList();
+                    if(!indicator){
+                        error.add("Missing required fields");
+                    }
+                    
+                    List<Bulletin> bulletin = new Service().getBulletin();
+
+
+                    response.setContentType("text/html");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    //request.setAttribute("errors", request.getParameter("errors"));
+                    request.setAttribute("bulletin", bulletin);
+                    request.setAttribute("errors", error);
+                    request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }

@@ -148,15 +148,21 @@ hr {
 	background-image: url('../images/bg1.jpg');
 	background-size:cover;
 }
-
+.righButton {
+    position: absolute;
+    right: 0px;
+    width: 10%;
+    background-color: #fff;
+    /* display: block; */
+}
 .header {
 	background-size: cover;
-	position: relative;
+	
 	display: block;
 	height: 600px;
     width: 100%;
 	padding-bottom: 100px;
-	padding-top: 200px;
+	padding-top: 100px;
     z-index: 100;
     text-align: center;
 }
@@ -284,7 +290,7 @@ span.glyphicon {
 
  	#bs-example-navbar-collapse-1 {
  		padding: 15px;
- 		background-color: rgba(0,0,0,0.75);
+ 		background-color: rgba(233, 228, 225, 0.85);
  		height: 900px;
     }
 }
