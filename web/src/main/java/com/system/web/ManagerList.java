@@ -92,10 +92,12 @@ public class ManagerList extends HttpServlet {
 
                         List<Employee> employees = new Service().getEmployees();
                         int employeeId = (int) session.getAttribute("id");
+                        List<Messages> messages = new Service().getMessagesById(employeeId);
 
                         Employee thisEmployee = new Service().getEmployeeById(employeeId);
                         response.setContentType("text/html");
                         response.setStatus(HttpServletResponse.SC_OK);
+                        request.setAttribute("messages", messages);
                         request.setAttribute("employee", thisEmployee);
                         request.setAttribute("employees", employees);
                         List bulletin = new Service().getBulletin();
@@ -226,6 +228,8 @@ public class ManagerList extends HttpServlet {
                 Employee employee = new Service().getEmployeeById(id);
                 new Service().deleteEmployee(employee);
                 List<Employee> employees = new Service().getEmployees();
+                
+                new Service().deleteAccountByEmployeeId(id);
 
 
                 response.setContentType("text/html");
@@ -330,6 +334,43 @@ public class ManagerList extends HttpServlet {
                     request.setAttribute("bulletin", bulletin);
                     request.setAttribute("errors", error);
                     request.getRequestDispatcher("/WEB-INF/managerEditBulletin.jsp").forward(request, response);
+                }
+            }else if(action.equals("changePass")){
+                String oldPass = request.getParameter("oldPass");
+                String newPass = request.getParameter("newPass");
+                String newPass2 = request.getParameter("newPass2");
+                int id = Integer.parseInt(request.getParameter("id"));
+
+                boolean a = new Service().checkUsername(id, oldPass);
+                System.out.println(a);
+
+                boolean b = newPass.equals(newPass2);
+
+                if(a && b){
+                    Account acc = new Service().getAccountByEmployeeId(id);
+                    acc.setPassword(newPass);
+                    new Service().updateAccount(acc);
+                    List bulletin = new Service().getBulletin();
+                    Employee thisEmployee = new Service().getEmployeeById(id);
+                    request.setAttribute("employee", thisEmployee);
+                    request.setAttribute("bulletin", bulletin);
+                    request.setAttribute("message", "Password Successfully Changed!");
+                    request.getRequestDispatcher("/WEB-INF/employee.jsp").forward(request, response);
+                }
+                else{
+                    List error = new ArrayList();
+                    if(!a){
+                        error.add("Incorrect password!");
+                    }
+                    if(!b){
+                        error.add("Password does not match!");
+                    }
+                    List bulletin = new Service().getBulletin();
+                    request.setAttribute("bulletin", bulletin);
+                    Employee thisEmployee = new Service().getEmployeeById(id);
+                    request.setAttribute("employee", thisEmployee);
+                    request.setAttribute("error", error);
+                    request.getRequestDispatcher("/WEB-INF/employee.jsp").forward(request, response);
                 }
             }
         } catch (Exception ex) {

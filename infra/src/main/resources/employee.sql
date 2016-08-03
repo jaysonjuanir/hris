@@ -16,10 +16,9 @@ CREATE TABLE employee (
 DROP TABLE if EXISTS messages CASCADE;
 CREATE TABLE messages (
     id bigserial NOT NULL,
-    sender bigint,
+    sender varchar(250),
     receiver bigint NOT NULL,
     message varchar(250),
-	seen boolean,
 	CONSTRAINT messages_pkey PRIMARY KEY (id)
 );
 

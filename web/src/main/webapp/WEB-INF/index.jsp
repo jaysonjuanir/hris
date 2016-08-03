@@ -197,7 +197,7 @@
 				</div>
 				<div class="row">
 					<h3>Mission:</h3>
-					<p>To provide a place for customer’s satisfaction by giving them a high quality of entertainment while founding a triumph relationship to our beloved customers</p>
+					<p>To provide a place for customer's satisfaction by giving them a high quality of entertainment while founding a triumph relationship to our beloved customers</p>
 				</div>
 				
 
@@ -218,8 +218,6 @@
 								<ul class="contact-list text-left">
 									<strong>Valenzuela City, Philippines</strong>
 									<li>Pamantasan ng Lungsod ng Valenzuela</li>
-									<li>Contact Person:</li>
-									<li>Mobile Number: </li>
 								</ul>
 							</div>
 						</div>
@@ -230,7 +228,7 @@
 							<p class="text-center text-white">Need to get in touch? Please fill out our form below and we'll contact you as soon as possible.</p>
 						</div>
 						<div class="row">
-							<h1>(Login First to send message)</h1>
+							<a href="#" data-toggle="modal" data-target="#loginModal"><h1>(Login First to send a message)</h1></a>
 						</div>
 					</div>
 				</div>
@@ -238,10 +236,14 @@
 					<hr>
 				</div>
 				<div class="row">
-					<small class="pull-right">Perfect Harmony. Sing your feelings © 2016</small>
+					<small class="pull-right">Perfect Harmony. Sing your feelings &copy; 2016</small>
 					<small class="pull-left">
 						<span class="glyphicon glyphicon-envelope"></span>
 						<a href="">Pamantasan ng Lungsod ng Valenzuela</a>
+					</small>
+					<small class="pull-left">
+						
+						<a href="">Change username and password</a>
 					</small>
 				</div>
 			</div>

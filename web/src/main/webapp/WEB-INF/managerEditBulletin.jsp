@@ -61,11 +61,6 @@
 							</a>
 						</li>
 						<li>
-							<a  href="${pageContext.request.contextPath}/Manager#contact">
-								<span>Contact Us</span>
-							</a>
-						</li>
-						<li>
 							<a data-toggle="modal" data-target="#loginModal">
 								<span>Logout</span>
 							</a>

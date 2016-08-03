@@ -65,6 +65,14 @@ public class AccountDao
                 int employeeId = result;//acc.getEmployeeId();
 		return employeeId; 
 	}
+        public void deleteAccountByEmployeeId(int id){
+            session = UtilSession.getSessionFactory().openSession();
+            String hql = "delete " + Account.class.getName() + " where employeeId = :id";
+            Query q = session.createQuery(hql).setParameter("id", id);
+            q.executeUpdate();
+            session.close();
+            System.out.println("Account DELETED!!");
+        }
         public Account getAccount(String user, String pass){
 		session = UtilSession.getSessionFactory().openSession();
 		List<Employee> employee = null;
@@ -93,10 +101,80 @@ public class AccountDao
             System.out.println("Account CREATED!!");
             session.close();
         }
+        public void updateAccount(Account account){
+            //UtilSession utilSession = new UtilSession();
+            session = UtilSession.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            session.update(account);
+            session.getTransaction().commit();
+            System.out.println("Account UPDATED!!");
+            session.close();
+        }
         public Long checkUsername(String username){
             session = UtilSession.getSessionFactory().openSession();
             Long a = (Long) session.createCriteria(Account.class).add( Restrictions.eq("username", username)).setProjection(Projections.rowCount()).uniqueResult();
             session.close();
             return a;
         }
+        public List<Account> getAccountManagers(){
+		session = UtilSession.getSessionFactory().openSession();
+		List<Account> account = null;
+                //Account account = null;
+		try{
+			account = session.createCriteria(Account.class).addOrder( Order.asc("id") )
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                .add(Restrictions.eq("level",2))
+                                .list();
+                        System.out.println(account);
+		}catch(HibernateException hex){
+			hex.printStackTrace();
+		}finally{
+			//session.close();
+		}
+		return account;
+	}
+        public boolean checkAccount(int emp, String pass){
+		session = UtilSession.getSessionFactory().openSession();
+		List<Employee> employee = null;
+                Account account;
+                boolean check = false;
+		try{
+			account = (Account)session.createCriteria(Account.class).addOrder( Order.asc("id") )
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                .add(Restrictions.eq("employeeId",emp))
+                                .add(Restrictions.eq("password",pass))
+                                .uniqueResult();
+                        System.out.println(account);
+                        if(account!=null){
+                            check = true;
+                        }
+		}catch(HibernateException hex){
+			hex.printStackTrace();
+		}finally{
+			//session.close();
+		}
+		return check;
+	}
+        public Account getAccountByEmployeeId(int emp){
+		session = UtilSession.getSessionFactory().openSession();
+		List<Employee> employee = null;
+                Account account = null;
+                boolean check = false;
+		try{
+			account = (Account)session.createCriteria(Account.class).addOrder( Order.asc("id") )
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                .add(Restrictions.eq("employeeId",emp))
+                                .uniqueResult();
+                        System.out.println(account);
+                        if(account!=null){
+                            check = true;
+                        }
+		}catch(HibernateException hex){
+			hex.printStackTrace();
+		}finally{
+			//session.close();
+		}
+		return account;
+	}
 }

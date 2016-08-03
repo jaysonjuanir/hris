@@ -6,7 +6,6 @@
 	<c:set var="employeeAddress" value="${employee.getAddress()}"/>
 	<c:set var="employeeContact" value="${employee.getContact()}"/>
 	<c:set var="employeePosition" value="${employee.getPosition()}"/>
-	<c:set var="employeeMessages" value="${employee.getMessages()}"/>
 	<c:set var="employeeAction" value="${employee.getActions()}"/>
 	<head>
 		<title>${employeeName} - Perfect Harmony</title>
@@ -62,11 +61,6 @@
 						<li>
 							<a  href="${pageContext.request.contextPath}/Manager#about">
 								<span>About</span>
-							</a>
-						</li>
-						<li>
-							<a  href="${pageContext.request.contextPath}/Manager#contact">
-								<span>Contact Us</span>
 							</a>
 						</li>
 						<li>
@@ -209,10 +203,18 @@
 		      </div> <!--end of column-->
 				</div> <!--end of row-->
 				<div class="row">
-					<small class="pull-right">Perfect Harmony. Sing your feelings &copy;2016</small>
+					<hr>
+				</div>
+				<div class="row">
+					<small class="pull-right">Perfect Harmony. Sing your feelings &copy; 2016</small>
 					<small class="pull-left">
 						<span class="glyphicon glyphicon-envelope"></span>
-						<a href="">Pamantasan ng Lungsod ng Valenzuela</a>
+						<a href="http://plv.edu.ph/" target="_blank">Pamantasan ng Lungsod ng Valenzuela</a>
+						<span>&nbsp;&bull;&nbsp;</span>
+						<a href="#" data-toggle="modal" data-target="#changeUserModal">Change password</a>
+					</small>
+					<small class="pull-left">
+						
 					</small>
 				</div>
 			</div> <!--end of container-->
@@ -237,7 +239,38 @@
 		    </div>
 		  </div>
 		</div>
-		
+		<div id="changeUserModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+		    <!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Change Password</h4>
+					</div>
+					<div class="modal-body">
+						<!--modal body-->
+						<div class="modal-body">
+							<form action="${pageContext.request.contextPath}/Manager" method="post" id="changeUser">
+							<div class="form-group">
+								<input class="form-control " type="password" name="oldPass" placeholder="Enter Old Password">
+							</div>
+							<div class="form-group">
+								<input class="form-control " type="password" name="newPass" placeholder="Enter New Password">
+							</div>
+							<div class="form-group">
+								<input class="form-control " type="password" name="newPass2" placeholder="Confirm New Password">
+							</div>
+							<input type="hidden" name="action" value="changePass">
+							<input type="hidden" name="id" value="${employee.getId()}">
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+					<button form="changeUser" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="addEmployeeModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 		    <!-- Modal content-->
@@ -291,7 +324,7 @@
 				</div>
 				
 				<!--modal footer-->
-			<div class="modal-footer ">
+				<div class="modal-footer ">
 				<button form="addEmployee" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Add Employee</button>
 				</div>
 		    </div>

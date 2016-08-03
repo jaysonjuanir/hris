@@ -21,8 +21,6 @@ public class Employee extends BaseEntity
 	private int accountId;
 	@Column(name = "position")
 	private String position;
-	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
-	private Set<Messages> messages;
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true, fetch=FetchType.LAZY)
 	private Set<Actions> actions;
 	
@@ -34,7 +32,6 @@ public class Employee extends BaseEntity
 		this.contact=contact;
 		this.accountId=accountId;
 		this.position=position;
-		this.messages=messages;
 		this.actions=actions;
 	}
 	public Name getName(){
@@ -67,12 +64,6 @@ public class Employee extends BaseEntity
 	}
 	public void setAccountId(int accountId){
 		this.accountId=accountId;
-	}
-	public Set<Messages> getMessages(){
-		return messages;
-	}
-	public void setMessages(Set<Messages> messages){
-		this.messages=messages;
 	}
 	public Set<Actions> getActions(){
 		return actions;

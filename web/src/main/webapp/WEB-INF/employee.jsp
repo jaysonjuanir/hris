@@ -8,7 +8,7 @@
 	<c:set var="employeeAddress" value="${employee.getAddress()}"/>
 	<c:set var="employeeContact" value="${employee.getContact()}"/>
 	<c:set var="employeePosition" value="${employee.getPosition()}"/>
-	<c:set var="employeeMessages" value="${employee.getMessages()}"/>
+	
 	<c:set var="employeeAction" value="${employee.getActions()}"/>
 	<head>
 		<title>${employeeName} - Perfect Harmony</title>
@@ -86,8 +86,14 @@
 
 		<!-- HEADER -->
 		<section id="home" class="header hris-section" style="background-image : url('images/employee-bg.jpg')">
+			<c:forEach var = "err" items = "${error}">
+					<div class="column column-6"><h4 style="color:red">${err}</h4></div>
+			</c:forEach>
+			
+			<div class="column column-6"><h4 style="color:green">${message}</h4></div>
 			<div class="container">
 				<div class="row">
+					<span></span>
 					<h2 class="text-left" style="margin-top:0px; color:black;">Welcome ${employeeName} </h2> 	
 					
 					<h4 class="text-left" style="margin-top:0px; color:black;">Full Name: ${employeeName} </h4>
@@ -246,45 +252,35 @@
 							<p class="text-center text-white">Need to get in touch? Please fill out our form below and we'll contact you as soon as possible.</p>
 						</div>
 						<div class="row">
-							<form id="contact-form" method="post" action="" role="form">
+							<form id="contact-form" method="post" action="${pageContext.request.contextPath}/Employee" role="form">
 								<div class="messages"></div>
 									<div class="row">
 										<div class="col-lg-6">
 											<div class="form-group">
 												<!-- <label for="form_name">First Name</label> -->
-              					<input id="form_name" type="text" name="name" class="form-control" placeholder="First name *" required="required" data-error="First name is required.">
+              					<input id="form_name" type="text" name="firstName" class="form-control" placeholder="First name *" value="${employeeName.getFirstName()}" required="required" data-error="First name is required.">
             						<div class="help-block with-errors"></div>
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="form-group">
 												<!-- <label for="form_lastname">Last Name</label> -->
-              					<input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Last name *" required="required" data-error="Last name is required.">
+              					<input id="form_lastname" type="text" name="lastName" class="form-control" placeholder="Last name *" value="${employeeName.getLastName()}" required="required" data-error="Last name is required.">
             						<div class="help-block with-errors"></div>
 											</div>
 										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="form-group">
-												<!-- <label for="form_email">Email</label> -->
-              					<input id="form_email" type="email" name="email" class="form-control" placeholder="Email address *" required="required" data-error="Email address is required.">
-            						<div class="help-block with-errors"></div>
-											</div>
-										</div>
-										
 									</div>
 
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="form-group">
 												<!-- <label for="form_message">Message</label> -->
-              					<textarea id="form_message" name="message" class="form-control" rows="8" placeholder="Message *" required="required" data-error="Email address is required." style="resize:none;"></textarea>
+              					<textarea id="form_message" name="thismessage" class="form-control" rows="8" placeholder="Message *" required="required" data-error="Email address is required." style="resize:none;"></textarea>
             						<div class="help-block with-errors"></div>
 											</div>
 										</div>
 										<div class="col-lg-12">
+											<input type="hidden" name="action" value="sendMessage">
 											<input type="submit" class="btn btn-success btn-send pull-right" value="Submit">
 										</div>
 									</div>
@@ -299,7 +295,12 @@
 					<small class="pull-right">Perfect Harmony. Sing your feelings © 2016</small>
 					<small class="pull-left">
 						<span class="glyphicon glyphicon-envelope"></span>
-						<a href="">Pamantasan ng Lungsod ng Valenzuela</a>
+						<a href="http://plv.edu.ph/" target="_blank">Pamantasan ng Lungsod ng Valenzuela</a>
+						<span>&nbsp;&bull;&nbsp;</span>
+						<a href="#" data-toggle="modal" data-target="#changeUserModal">Change password</a>
+					</small>
+					<small class="pull-left">
+						
 					</small>
 				</div>
 			</div>
@@ -319,6 +320,38 @@
 		      </div>
 		      <div class="modal-footer">
 		        
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+		<div id="changeUserModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Change Password</h4>
+		      </div>
+		      <div class="modal-body">
+				<!--modal body-->
+				<div class="modal-body">
+					<form action="${pageContext.request.contextPath}/Employee" method="post" id="changeUser">
+					<div class="form-group">
+						<input class="form-control " type="password" name="oldPass" placeholder="Enter Old Password">
+					</div>
+					<div class="form-group">
+						<input class="form-control " type="password" name="newPass" placeholder="Enter New Password">
+					</div>
+					<div class="form-group">
+						<input class="form-control " type="password" name="newPass2" placeholder="Confirm New Password">
+					</div>
+					<input type="hidden" name="action" value="changePass">
+					<input type="hidden" name="id" value="${employee.getId()}">
+					</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button form="changeUser" type="submit" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Submit</button>
 		      </div>
 		    </div>
 		  </div>

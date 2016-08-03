@@ -18,6 +18,7 @@ public class Service {
     EmployeeDao employeeDao = new EmployeeDao();
     AccountDao accountDao = new AccountDao();
     BulletinDao bulletinDao = new BulletinDao();
+    MessagesDao messagesDao = new MessagesDao();
 
     public void executeCreateEmployee(Employee employee) {
         employeeDao.addEmployee(employee);
@@ -73,5 +74,26 @@ public class Service {
     }
     public void addAccount(Account account) {
         accountDao.addAccount(account);
+    }
+    public void updateAccount(Account account) {
+        accountDao.updateAccount(account);
+    }
+    public void deleteAccountByEmployeeId(int id){
+        accountDao.deleteAccountByEmployeeId(id);
+    }
+    public List<Account> getAccountManagers(){
+        return accountDao.getAccountManagers();
+    }
+    public boolean checkUsername(int id, String oldPass){
+        return accountDao.checkAccount(id, oldPass);
+    }
+    public List<Messages> getMessagesById(int id){
+        return messagesDao.getMessagesById(id);
+    }
+    public void createMessage(Messages message){
+        messagesDao.createMessage(message);
+    }
+    public Account getAccountByEmployeeId(int id){
+        return accountDao.getAccountByEmployeeId(id);
     }
 }
