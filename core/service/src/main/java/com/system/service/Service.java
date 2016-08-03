@@ -17,6 +17,7 @@ public class Service {
 
     EmployeeDao employeeDao = new EmployeeDao();
     AccountDao accountDao = new AccountDao();
+    BulletinDao bulletinDao = new BulletinDao();
 
     public void executeCreateEmployee(Employee employee) {
         employeeDao.addEmployee(employee);
@@ -36,6 +37,26 @@ public class Service {
 
     public List<Employee> getEmployees() {
         return employeeDao.getEmployees();
+    }
+    
+    public void executeCreateBulletin(Bulletin bulletin) {
+        bulletinDao.addBulletin(bulletin);
+    }
+
+    public void executeUpdatedBulletin(Bulletin bulletin) {
+        bulletinDao.updateBulletin(bulletin);
+    }
+
+    public void deleteEmployee(Bulletin bulletin) {
+        bulletinDao.deleteBulletin(bulletin);
+    }
+
+    public Bulletin getBulletinById(int bulletinId) {
+        return bulletinDao.getBulletinById(bulletinId);
+    }
+
+    public List<Bulletin> getBulletin() {
+        return bulletinDao.getBulletin();
     }
 
     public int verifyAccount(String user, String pass) {

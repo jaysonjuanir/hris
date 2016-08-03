@@ -76,7 +76,8 @@ public class ManagerList extends HttpServlet {
                         response.setContentType("text/html");
                         response.setStatus(HttpServletResponse.SC_OK);
                         request.setAttribute("employee", thisEmployee);
-                        
+                        List bulletin = new Service().getBulletin();
+                        request.setAttribute("bulletin", bulletin);
                         //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
                     } catch (Exception ex) {
                         ex.printStackTrace();

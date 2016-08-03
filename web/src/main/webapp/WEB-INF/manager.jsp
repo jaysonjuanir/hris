@@ -91,12 +91,98 @@
 			<div class="container" id="offset-top">
 				<div class="row">
 					<h1>Bulletin</h1>
-				</div>
-				<div class="row">
-					<div class="col-lg-12">
-						<a class="btn btn-lg btn-outline" href="">Learn More</a>
+					<hr>
+					<!--ANNOUNCEMENTS CAROUSEL-->
+					<div id="announcementCarousel" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+						  <li data-target="#announcementCarousel" data-slide-to="0" class="active"></li>
+						  <li data-target="#announcementCarousel" data-slide-to="1"></li>
+						  <li data-target="#announcementCarousel" data-slide-to="2"></li>
+						</ol>
+
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+						  <div class="item active">
+						    <div class="row alert alert-success" style ="border:1px solid orange;">
+						    	<h3>Announcements!</h3>
+								
+								<c:forEach var="blog" items="${bulletin}" >
+									<c:if test="${blog.getBulletinType().equals('announcement')}">
+										<div class="col-xs-6">
+											<h4 class=""> <b>Posted By: ${blog.getEmployeeName()}</b> </h4>
+											<span class="text-center big" ><b>Title:</b> ${blog.getBulletinSubject()}</span>
+										</div>
+										<br/>
+										<br/>
+										<div class="text-center">
+											
+											<p>${blog.getMessage()}</p>
+										</div>
+										<hr>
+									</c:if>
+								</c:forEach>
+						    </div>
+						  </div>
+
+						  <div class="item">
+						    <div class="row alert alert-warning" style ="border:1px solid orange;" >
+						    	<h3>Updates</h3>
+						    	<c:forEach var="blog" items="${bulletin}" >
+									<c:if test="${blog.getBulletinType().equals('update')}">
+										<div class="col-xs-6">
+											<h4 class=""> <b>Posted By: ${blog.getEmployeeName()}</b> </h4>
+											<span class="text-center big" ><b>Title:</b> ${blog.getBulletinSubject()}</span>
+										</div>
+										<br/>
+										<br/>
+										<div class="text-center">
+											<p>${blog.getMessage()}</p>
+										</div>
+										<hr>
+									</c:if>
+									
+								</c:forEach>
+						    </div>
+						  </div>
+
+						  <div class="item">
+						    <div class="row alert alert-danger" style ="border:1px solid orange;">
+						    	<h3>News</h3>
+						    	<c:forEach var="blog" items="${bulletin}" >
+									<c:if test="${blog.getBulletinType().equals('news')}">
+										<div class="col-xs-6">
+											<h4 class=""> <b>Posted By: ${blog.getEmployeeName()}</b> </h4>
+											<span class="text-center big" ><b>Title:</b> ${blog.getBulletinSubject()}</span>
+										</div>
+										<br/>
+										<br/>
+										<div class="text-center">
+											<p>${blog.getMessage()}</p>
+										</div>
+										<hr>
+									</c:if>
+									
+								</c:forEach>
+						    </div>
+						  </div>
+
+						</div>
+						
+						<!-- Left and right controls -->
+						<a class="left carousel-control" href="#announcementCarousel" role="button" data-slide="prev">
+						  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						  <span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="#announcementCarousel" role="button" data-slide="next">
+						  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						  <span class="sr-only">Next</span>
+						</a>
+						
 					</div>
 				</div>
+					
+					
 			</div>
 		</section>
 		<!-- ABOUT -->
@@ -223,5 +309,7 @@
 		    </div>
 		  </div>
 		</div>
+		
+		
 	</body>
 </html>

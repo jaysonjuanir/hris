@@ -20,6 +20,7 @@ public class UtilSession
                         .addAnnotatedClass(com.system.model.Account.class)
 			.addAnnotatedClass(com.system.model.Actions.class)
 			.addAnnotatedClass(com.system.model.Messages.class)
+                        .addAnnotatedClass(com.system.model.Bulletin.class)
 			//.addAnnotatedClass(com.person.model.Roles.class)
 			//.addAnnotatedClass(com.person.model.Person.class)
 			/*.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
