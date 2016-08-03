@@ -12,7 +12,7 @@ package com.system.model;
  */
 import javax.persistence.*;
 @Entity
-@Table(name="accounts")
+@Table(name="account")
 public class Account extends BaseEntity{
     
     @Column(name="username")

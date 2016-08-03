@@ -1,22 +1,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
+	<c:set var="employee" value="${employee}" />
+	<c:set var="employeeName" value="${employee.getName()}"/>
+	<c:set var="employeeAddress" value="${employee.getAddress()}"/>
+	<c:set var="employeeContact" value="${employee.getContact()}"/>
+	<c:set var="employeePosition" value="${employee.getPosition()}"/>
+	<c:set var="employeeMessages" value="${employee.getMessages()}"/>
+	<c:set var="employeeAction" value="${employee.getActions()}"/>
 	<head>
-		<title>Perfect Harmony - Home</title>
+		<title>${employeeName} - Perfect Harmony</title>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <!-- SCRIPTS -->
-		<script src="${pageContext.request.contextPath}/js/jquery.js"></script>
-		<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-		<script src="${pageContext.request.contextPath}/js/effects.js"></script>
-		<script src="${pageContext.request.contextPath}/dist/js/smooth-scroll.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/effects.js"></script>
+		<script src="dist/js/smooth-scroll.js"></script>
 
 		<!-- Latest compiled and minified CSS -->
-		<link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<!-- Custom CSS -->
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/hris.css" type="text/css" />
+		<link rel="stylesheet" href="css/hris.css" type="text/css" />
 		<!-- Favicon -->
 		<link rel="icon" href="${pageContext.request.contextPath}/images/favicon.png">
 	</head>
@@ -43,7 +49,7 @@
 							<a data-scroll href="#page-top"></a>
 						</li>
 						<li>
-							<a data-scroll href="#page-top">
+							<a data-scroll href="#home">
 								<span>Home</span>
 							</a>
 						</li>
@@ -53,18 +59,18 @@
 							</a>
 						</li>
 						<li>
-							<a data-scroll href="#contact">
-								<span>Contact Us</span>
-							</a>
-						</li>
-						<li>
 							<a data-scroll href="#about">
 								<span>About</span>
 							</a>
 						</li>
 						<li>
+							<a data-scroll href="#contact">
+								<span>Contact Us</span>
+							</a>
+						</li>
+						<li>
 							<a data-toggle="modal" data-target="#loginModal">
-								<span>Login</span>
+								<span>Logout</span>
 							</a>
 						</li>
 					</ul>
@@ -73,22 +79,19 @@
 		</nav>
 
 		<!-- HEADER -->
-		<section id="home-top" class="header hris-section">
+		<section class="header hris-section" style="background-image : url('images/manager-bg.jpg')">
 			<div class="container">
 				<div class="row">
-					<h1 class="text-center big"><i>Perfect Harmony</i></h1> 
-					<h3 class="text-center">"SING YOUR FEELINGS"</h3>
-					<h3 class="text-center">KAMIAS ST. QUEZON CITY</h3>
+					<h2 class="text-left" style="margin-top:0px; color:black;">Welcome ${employeeName}</h2> 
 				</div>
 			</div>
 		</section>
-		<!-- BULLETIN-->
+		<!-- BULLETIN -->
 		<section id="bulletin" class="hris-section">
 			<div class="container" id="offset-top">
 				<div class="row">
 					<h1>Bulletin</h1>
 				</div>
-
 				<div class="row">
 					<div class="col-lg-12">
 						<a class="btn btn-lg btn-outline" href="">Learn More</a>
@@ -114,13 +117,10 @@
 				</div>
 				
 
-				<div class="row">
-					<div class="col-lg-12">
-						<a class="btn btn-lg btn-outline" href="">Learn More</a>
-					</div>
-				</div>
+				
 			</div>
 		</section>
+
 		<!-- CONTACT US -->
 		<section id="contact" class="contact-section hris-section">
 			<div class="container" id="offset-top">
@@ -141,13 +141,54 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-lg-6 col-md-6 col-sm-6">
 						<div class="row">
 							<p class="text-center text-white">Need to get in touch? Please fill out our form below and we'll contact you as soon as possible.</p>
 						</div>
 						<div class="row">
-							<h1>(Login First to send message)</h1>
+							<form id="contact-form" method="post" action="" role="form">
+								<div class="messages"></div>
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<!-- <label for="form_name">First Name</label> -->
+              					<input id="form_name" type="text" name="name" class="form-control" placeholder="First name *" required="required" data-error="First name is required.">
+            						<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										<div class="col-lg-6">
+											<div class="form-group">
+												<!-- <label for="form_lastname">Last Name</label> -->
+              					<input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Last name *" required="required" data-error="Last name is required.">
+            						<div class="help-block with-errors"></div>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<!-- <label for="form_email">Email</label> -->
+              					<input id="form_email" type="email" name="email" class="form-control" placeholder="Email address *" required="required" data-error="Email address is required.">
+            						<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="form-group">
+												<!-- <label for="form_message">Message</label> -->
+              					<textarea id="form_message" name="message" class="form-control" rows="8" placeholder="Message *" required="required" data-error="Email address is required." style="resize:none;"></textarea>
+            						<div class="help-block with-errors"></div>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="submit" class="btn btn-success btn-send pull-right" value="Submit">
+										</div>
+									</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -164,34 +205,20 @@
 			</div>
 		</section>
 		
-
-		<!-- Login Modal -->
 		<div id="loginModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog">
 		    <!-- Modal content-->
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title">Login</h4>
+		        <h4 class="modal-title">Logout</h4>
 		      </div>
 		      <div class="modal-body">
-		        <form role="form" action="${pageContext.request.contextPath}/HomePage" method="post">
-							<div class="form-group">
-							  <label for="email" style="color : black;">Username:</label>
-							  <input type="text" class="form-control" id="email" name = "user"/>
-							</div>
-							<div class="form-group">
-							  <label for="pwd" style="color : black;">Password:</label>
-							  <input type="password" class="form-control" id="pwd" name = "pass"/>
-							</div>
-							<div class="checkbox">
-							  <label><input type="checkbox"> Remember me</label>
-							</div>
-							<input type="submit" class="btn btn-success" value="Submit"/>
-						</form>
+					<a class="btn btn-success" href="${pageContext.request.contextPath}/Manager?action=logout">Yes</a>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		        
 		      </div>
 		    </div>
 		  </div>

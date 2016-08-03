@@ -14,14 +14,14 @@ import javax.servlet.http.*;
 /**
  * Servlet implementation class MainPage
  */
-public class HomePage extends HttpServlet {
+public class ManagerList extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomePage() {
+    public ManagerList() {
         System.out.println("MainPage Constructor called!");
     }
 
@@ -44,75 +44,54 @@ public class HomePage extends HttpServlet {
      * response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession(false);
-            String action = request.getParameter("action");
-            if (action == null) {
-                action = "";
-            }
-
-            if (session == null) {
-                System.out.println("MainPage \"Service\" method(inherited) called");
-                System.out.println("MainPage \"DoGet\" method called");
-                //response.sendRedirect(request.getContextPath()+"/HomePage");
-                request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-            } else {
+        HttpSession session=request.getSession(false);
+        
+        String action = request.getParameter("action");
+        if(action==null)
+            action="";
+            
+        
+        if(session!=null){
+            System.out.println("MainPage \"Service\" method(inherited) called");
+            System.out.println("MainPage \"DoGet\" method called");
+            
+            if(action.equals("logout")){
+                session.invalidate();  
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage"));
+            }else{
                 Integer employeeLevel = (Integer) session.getAttribute("level");
                 if(employeeLevel==null){
-                    request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-                    
-                }else if(employeeLevel==1){
-                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not-logged-in"));
+                }else if(employeeLevel==2){
+                    try {
+                        Name name = new Name("Jennifer", "T", "Marcos");
+                        Address address = new Address("378 E. Marcos St.", "Coloong", "Valenzuela City");
+                        Employee employee = new Employee(name, address, "09496324385", 1, "General Manager", null, null);
+                        //new Service().executeCreateEmployee(employee);
+
+                        List<Employee> employees = new Service().getEmployees();
+                        int employeeId = (int)session.getAttribute("id");
+                        
+                        Employee thisEmployee = new Service().getEmployeeById(employeeId);
+                        response.setContentType("text/html");
+                        response.setStatus(HttpServletResponse.SC_OK);
+                        request.setAttribute("employee", thisEmployee);
+                        
+                        //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    request.getRequestDispatcher("/WEB-INF/manager.jsp").forward(request, response);
                 }else{
-                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Manager"));
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        System.out.println("Username: " + user + " Password: " + pass);
-        System.out.println("MainPage \"Service\" method(inherited) called");
-        System.out.println("MainPage \"DoPost\" method called");
-
-        try {
-//            Name name = new Name("Jennifer", "T", "Marcos");
-//            Address address = new Address("378 E. Marcos St.", "Coloong", "Valenzuela City");
-//            Employee employee = new Employee(name, address, "09496324385", 1, "General Manager", null, null);
-//            //new Service().executeCreateEmployee(employee);
-//
-//            List<Employee> employees = new Service().getEmployees();
-            user = request.getParameter("user");
-            pass = request.getParameter("pass");
-            //Account a = new Service().getAccount(user,pass);
-            int id = new Service().verifyAccount(user, pass);
-            Account ac = new Service().getAccount(user, pass);
-            System.out.println("checking account:");
-            System.out.println(ac);
-            System.out.println("checking id:");
-            System.out.println(id);
-
-            response.setContentType("text/html");
-            response.setStatus(HttpServletResponse.SC_OK);
-            if (ac == null) {
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=invalid-username-or-password"));
-            } else {
-                HttpSession session = request.getSession(); //session initialization
-                session.setAttribute("id", ac.getEmployeeId());
-                session.setAttribute("level", ac.getLevel());
-                if(ac.getLevel()==1)
                     response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Employee"));
-                else if(ac.getLevel()==2)
-                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/Manager"));
+                }
+                
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        }else{
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/HomePage?message=not logged in"));
         }
+        //storeInSessionAndRespond(request, response);
+
     }
 
     /**

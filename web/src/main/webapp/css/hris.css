@@ -146,6 +146,7 @@ hr {
 /*** HEADER ***/
 #home-top {
 	background-image: url('../images/bg1.jpg');
+	background-size:cover;
 }
 
 .header {
@@ -177,6 +178,7 @@ hr {
 	background-image: url('../images/contact-us.jpg');
 	background-position: right -50px;
 	color: #ffffff;
+	background-size:cover;
 }
 
 section #contact {

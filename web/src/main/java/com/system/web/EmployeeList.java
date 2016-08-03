@@ -70,10 +70,12 @@ public class EmployeeList extends HttpServlet {
                         //new Service().executeCreateEmployee(employee);
 
                         List<Employee> employees = new Service().getEmployees();
-
+                        int employeeId = (int)session.getAttribute("id");
+                        
+                        Employee thisEmployee = new Service().getEmployeeById(employeeId);
                         response.setContentType("text/html");
                         response.setStatus(HttpServletResponse.SC_OK);
-                        request.setAttribute("employees", employees);
+                        request.setAttribute("employee", thisEmployee);
                         
                         //response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/TestSessionServlet"));
                     } catch (Exception ex) {

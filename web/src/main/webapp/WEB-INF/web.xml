@@ -34,6 +34,19 @@
   	<url-pattern>/HomePage/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>Manager</servlet-name>
+  	<display-name>Manager</display-name>
+  	<servlet-class>com.system.web.ManagerList</servlet-class>
+  	<!--Un-comment  below line if you want to instantiate and initialize the servlet during the servlet-container(tomcat) startup-->
+  	<!-- <load-on-startup>1</load-on-startup> -->
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Manager</servlet-name>
+  	<url-pattern>/Manager/*</url-pattern>
+  </servlet-mapping>
+  
   <!--
   <servlet>
   	<servlet-name>PersonServlet</servlet-name>
